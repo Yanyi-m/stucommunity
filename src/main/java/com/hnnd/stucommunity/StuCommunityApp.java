@@ -25,7 +25,7 @@ public class StuCommunityApp {
       
 
         logger.info("Config加载完毕~");
-
+        initConfig();
         SpringApplication.run(StuCommunityApp.class, args);
     }
     
@@ -35,4 +35,8 @@ public class StuCommunityApp {
         SecurityConfig.init();
         DbConfig.init();
     }
+    
+    
+   
+
 }

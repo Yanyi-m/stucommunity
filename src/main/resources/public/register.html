@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>注册StuCommunity</title>
+<link rel="stylesheet" href="css/style.css">
+<script type="text/javascript">
+	
+	function getVerifyCode(){
+		var btn=$(".verifyCode");
+		
+		var emailRecipients=$(".email").val();
+		
+		var _data="emailRecipients="+emailRecipients;
+			
+		$.ajax({
+			type:"get",
+			url:"/sendVerifyEmail",
+			data:_data,
+			dataType:"json",
+			success:function(data){
+				$.each(data, function(key, value) {
+					if(key=="code" && value==0){
+						settime(btn);
+					}
+				}
+				);
+				
+			}
+		});
+	}
+	
+	var countdown=60;
+	function settime(val) {
+	if (countdown == 0) {
+	val.attr("disabled", false);
+	val.val("重新发送");
+	val.css({
+	"background":"#1E90FF"
+	});
+	countdown = 60;
+	return false;
+	} else {
+	val.attr("disabled", true);
+	val.val("正在获取"+countdown);
+	val.css({
+	"background":"#ccc"
+	});
+	countdown--;
+	}
+	setTimeout(function() {
+	settime(val)
+	},1000)
+	}
+</script>
+<body>
+
+<div class="register-container">
+	<h1>StuCommunity</h1>
+	
+	<div class="connect">
+		<p>欢迎您的加入</p>
+	</div>
+	
+	<form action="/checkRegister" method="get" id="registerForm">
+		<div>
+			<input type="text" name="nickname" class="username" placeholder="您的名称" autocomplete="off"/>
+		</div>
+		<div>
+			<input type="email" name="email" class="email" placeholder="输入邮箱地址" oncontextmenu="return false" onpaste="return false" />	
+		</div>
+		<div>
+			<input type="text" class="test" name="verifycode" placeholder="验证码">
+			<input type="button" class="verifyCode" type="button" onclick="getVerifyCode()" value="获取验证码"/>
+		</div>
+		<div>
+			<input type="password" name="password" class="password" placeholder="输入密码" oncontextmenu="return false" onpaste="return false" />
+		</div>
+		<div>
+			<input type="password" name="confirm_password" class="confirm_password" placeholder="再次输入密码" oncontextmenu="return false" onpaste="return false" />
+		</div>
+		
+		
+
+		<button id="submit" type="submit">注 册</button>
+	</form>
+	
+	<a href="login.html">
+		<button type="button" class="register-tis">已经有账号？</button>
+	</a>
+
+</div>
+
+</body>
+<script src="js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<!--背景图片自动更换-->
+<script src="js/supersized.3.2.7.min.js"></script>
+<script src="js/supersized-init.js"></script>
+<!--表单验证-->
+<script src="js/jquery.validate.min.js?var1.14.0"></script>
+</html>

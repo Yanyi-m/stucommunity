@@ -1,20 +1,19 @@
 package com.hnnd.stucommunity.config;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.support.http.StatViewServlet;
-import org.springframework.boot.context.embedded.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-
-import javax.servlet.http.HttpServlet;
-import javax.sql.DataSource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
+import javax.sql.DataSource;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
+import com.alibaba.druid.pool.DruidDataSource;
 
 @Configuration
 public class DbConfig {
@@ -61,11 +60,7 @@ public class DbConfig {
 //        password2 = properties.getProperty("password2");
 //        driverClass2 = properties.getProperty("driverClass2");
     }
-
-
-    //==================================
-    //第一数据源
-    //==================================
+    
     @Bean
     public DataSource dataSource(){
         DruidDataSource dataSource = new DruidDataSource();
@@ -92,6 +87,11 @@ public class DbConfig {
     }
 
 
+
+    //==================================
+    //第一数据源
+    //==================================
+   
 
     //==================================
     //第二数据源
