@@ -1,0 +1,14 @@
+/login.html
+/register.html
+/sendVerifyEmail
+/checkRegister
+/checkLogin
+/css/style.css
+/js/jquery.min.js
+/js/common.js
+/js/supersized.3.2.7.min.js
+/js/supersized-init.js
+/js/jquery.validate.min.js
+/images/6.jpg
+/images/9.jpg
+/images/7.jpg

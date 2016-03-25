@@ -5,7 +5,7 @@ import java.util.Date;
 public class UserInformation {
 	private int userId;
 	private String nickName;
-	private String userIntroduction="他（她）很懒，什么都没有留下~";
+	private String userIntroduction="这个人很懒，什么都没有留下~";
 	private String userPicture="image/test.jpg";
 	private int identity;
 	private int stuId;
