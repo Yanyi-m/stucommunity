@@ -44,9 +44,9 @@ public class WebConfig {
         if(file.exists()){
             in = new FileInputStream(file);
         }else {
-            in = SecurityConfig.class.getClassLoader().getResourceAsStream("config/web.properties");
+            in = WebConfig.class.getClassLoader().getResourceAsStream("config/web.properties");
         }
-
+        
         Properties properties = new Properties();
         properties.load(in);
         in.close();

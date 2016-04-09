@@ -1,5 +1,7 @@
 package com.hnnd.stucommunity.common.base;
 
+import com.alibaba.fastjson.JSONObject;
+
 
 public final class ResultModel {
 
@@ -21,17 +23,6 @@ public final class ResultModel {
     public Object getBody() {
         return body;
     }
-    public void setBody(Object body) {
-        this.body = body;
-    }
-    public boolean isSuccess(){
-        return getCode() == RETURN_CODE_SUCCESS;
-    }
-    public boolean isFail(){
-        return getCode() != RETURN_CODE_SUCCESS;
-    }
-
-
 
     public static ResultModel successModel(){
         return successModel("");
@@ -45,4 +36,16 @@ public final class ResultModel {
     public static ResultModel failModel(Object body){
         return new ResultModel(RETURN_CODE_FAIL,body);
     }
+    
+    public boolean isSuccess(){
+        return getCode() == RETURN_CODE_SUCCESS;
+    }
+    public boolean isFail(){
+        return getCode() == RETURN_CODE_FAIL;
+    }
+   /*
+    public static void main(String[] args) {
+    	ResultModel resultModel=ResultModel.successModel();	
+		System.out.println(JSONObject.toJSONString((resultModel)));
+	}*/
 }

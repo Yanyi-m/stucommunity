@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hnnd.stucommunity.business.service.PrivateMsgService;
-import com.hnnd.stucommunity.common.base.ResultModel;
 
 @Controller
 public class PrivateMsgController {

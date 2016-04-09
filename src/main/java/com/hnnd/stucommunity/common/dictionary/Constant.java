@@ -1,7 +1,7 @@
 package com.hnnd.stucommunity.common.dictionary;
 
 /**
- * Created by liuyishan on 15/8/18.
+ * Created by yanyimin on 16/3/20.
  */
 public class Constant {
 

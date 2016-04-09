@@ -16,7 +16,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.hnnd.stucommunity.business.model.Activity;
-import com.hnnd.stucommunity.business.model.Community;
 
 @Repository
 public class ActivityDao {

@@ -21,19 +21,17 @@ public class StuCommunityApp {
 	private static Logger logger = LoggerFactory.getLogger(StuCommunityApp.class);
 
     public static void main(String[] args) throws Exception {
-
-      
-
-        logger.info("Config加载完毕~");
+       
         initConfig();
+        logger.info("Config加载完毕~");
         SpringApplication.run(StuCommunityApp.class, args);
     }
     
 
     public static void initConfig() throws Exception{
         WebConfig.init();
-        SecurityConfig.init();
         DbConfig.init();
+        SecurityConfig.init(); 
     }
     
     

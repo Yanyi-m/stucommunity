@@ -11,6 +11,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.hnnd.stucommunity.business.model.PrivateMsg;
 import com.hnnd.stucommunity.common.dictionary.Constant;
 
 @Component
@@ -50,7 +51,9 @@ public class EchoHandler extends TextWebSocketHandler {
     * @param message
      * @throws Exception 
     */
-    public boolean sendMessageToUser(Integer senderId, Integer recipientId, String message) throws Exception {
+    public boolean sendMessageToUser(PrivateMsg privateMsg,String message) throws Exception {
+    	Integer senderId=privateMsg.getSenderId();
+    	Integer recipientId=privateMsg.getRecipientId();
     	//找到对应的用户的websocket session
     		WebSocketSession sender = sessionMap.get(senderId);//需要判断是否有get不到的情况
     		WebSocketSession recipient;

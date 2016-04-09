@@ -6,7 +6,7 @@ public class PrivateMsg {
 	private Integer recipientId;
 	private	Integer dialogId;
 	private Integer msgId;
-	private Integer isRead;
+	private Integer isRead=0;
 	public Integer getId() {
 		return id;
 	}

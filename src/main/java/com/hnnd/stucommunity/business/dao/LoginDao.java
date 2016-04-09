@@ -42,7 +42,7 @@ public class LoginDao {
 	 * @throws NoSuchAlgorithmException 
 	 */
 	public int saveUser(User user) throws NoSuchAlgorithmException, UnsupportedEncodingException{
-		  	String password = MD5.EncoderByMd5(user.getPassword());
+		  	String password = MD5.encoderByMd5(user.getPassword());
 
 	        user.setPassword(password + user.getUsername());
 		

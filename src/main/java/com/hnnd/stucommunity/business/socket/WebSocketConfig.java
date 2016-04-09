@@ -10,6 +10,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new EchoHandler(), "/ws").addInterceptors(new WebSocketHandshakeInterceptor());
+    	//spring自动加了Origins拦截，所以需要设置
+        registry.addHandler(new EchoHandler(), "/ws").addInterceptors(new WebSocketHandshakeInterceptor()).setAllowedOrigins("http://localhost:8889");
     }
 }

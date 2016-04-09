@@ -29,7 +29,7 @@ public class CommunityService {
 		community.setName(request.getParameter("name"));
 		community.setIntroduction(request.getParameter("introduction"));
 	
-		Integer CommunityId=communityDao.saveCommunity(community);
+		Integer communityId=communityDao.saveCommunity(community);
 		return ResultModel.successModel();
 	}
 	

@@ -48,7 +48,7 @@ public class LoginService {
 	 */
 	public ResultModel checkUserIsExist(HttpServletRequest request) throws Exception{
 		String username=request.getParameter("username");
-		String password=MD5.EncoderByMd5(request.getParameter("password"))+username;
+		String password=MD5.encoderByMd5(request.getParameter("password"))+username;
 		
 		String password1=loginDao.getUser(username).getPassword();
 		Integer userId=loginDao.getUser(username).getUserId();
