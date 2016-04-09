@@ -1,10 +1,10 @@
 package com.hnnd.stucommunity.business.service;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,14 +48,16 @@ public class LoginService {
 	 */
 	public ResultModel checkUserIsExist(HttpServletRequest request) throws Exception{
 		String username=request.getParameter("username");
-		String password=MD5.EncoderByMd5(request.getParameter("password"))+username;
+		String password=MD5.encoderByMd5(request.getParameter("password"))+username;
 		
-		String password1=loginDao.findUser(username).getPassword();
+		String password1=loginDao.getUser(username).getPassword();
+		Integer userId=loginDao.getUser(username).getUserId();
 		
 		if(password1==null || password1.equals("")){
 			return ResultModel.failModel("用户名不存在");
 		} 
 		if(password1.equals(password)){
+			request.getSession().setAttribute("userId", userId);
 			return ResultModel.successModel("密码正确");
 		}
 		
@@ -144,7 +146,7 @@ public class LoginService {
 	
 	
 	/**
-	 * 验证注册
+	 * 验证注册,权限应该由另一个方法调用来修改
 	 * @param request
 	 * @return
 	 * @throws Exception
@@ -156,6 +158,9 @@ public class LoginService {
 		String secondPwd=request.getParameter("confirm_password");
 		String nickName=request.getParameter("nickname");
 		
+		if(emailRecipients.equals("") || verifyCode.equals("") || firstPwd.equals("") || secondPwd.equals("") || nickName.equals("")){
+			return DefineType.FAIL_CODE;
+		}
 		if(checkVerifyCodeIsTure(emailRecipients, verifyCode).isFail()){
 			return DefineType.FAIL_CODE;
 		}
@@ -167,15 +172,13 @@ public class LoginService {
 		User user=new User();
 		user.setUsername(emailRecipients);
 		user.setPassword(firstPwd);
-		user.setBlackUser(0);
-		user.setAuthority(0);
 		
 		//插入用户
 		user.setUserId(loginDao.saveUser(user));
 		//插入用户信息
-		Date jionDate=new Date();
+	
 		UserInformation userInfo=new UserInformation();
-		userInfo.setJionDate(jionDate);
+		userInfo.setJionDate(new Date());
 		userInfo.setUserId(user.getUserId());
 		userInfo.setNickName(nickName);
 		userInfo.setEmail(emailRecipients);
@@ -188,6 +191,29 @@ public class LoginService {
 		return user.getUserId();
 	}
 	
+	/**
+	 * 得到用户信息
+	 * @param request
+	 * @return
+	 */
+	public UserInformation getUserInformation(Integer userId){
+		UserInformation userInformation=new UserInformation();
+		
+		userInformation=loginDao.getUserInformationByUserId(userId);
+		return userInformation; 
+	}
+	
+	
+	/**
+	 * 得到用户信息通过昵称
+	 * @param request
+	 * @return
+	 */
+	public List<UserInformation> getUserInformationByName(String name){
+		List<UserInformation> list=new ArrayList<UserInformation>();
+		list=loginDao.getUserInformationByName(name);
+		return list; 
+	}
 	
 	/**
 	 * 24:00定时清理timesMap

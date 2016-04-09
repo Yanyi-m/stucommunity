@@ -1,5 +1,15 @@
 package com.hnnd.stucommunity.config;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Locale;
+import java.util.Properties;
+
+import javax.servlet.Filter;
+
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
@@ -7,22 +17,12 @@ import org.springframework.boot.context.embedded.ErrorPage;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import com.hnnd.stucommunity.config.dictionary.Constant;
-
-import javax.servlet.Filter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.*;
-import java.util.Locale;
-import java.util.Properties;
+import com.hnnd.stucommunity.common.dictionary.Constant;
 
 @Configuration
 public class WebConfig {
@@ -44,9 +44,9 @@ public class WebConfig {
         if(file.exists()){
             in = new FileInputStream(file);
         }else {
-            in = SecurityConfig.class.getClassLoader().getResourceAsStream("config/web.properties");
+            in = WebConfig.class.getClassLoader().getResourceAsStream("config/web.properties");
         }
-
+        
         Properties properties = new Properties();
         properties.load(in);
         in.close();

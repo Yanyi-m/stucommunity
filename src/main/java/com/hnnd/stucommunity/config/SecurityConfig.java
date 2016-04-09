@@ -1,44 +1,59 @@
 package com.hnnd.stucommunity.config;
 
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Set;
 
 public class SecurityConfig {
-
-    //ip白名单
-    private static Set<String> whiteList;
-
-
-    public static void init() throws IOException {
-
-        Set<String> set = new HashSet<>();
-
-        InputStream in;
-
-        File file = new File("./config/whitelist.txt");
-        if(file.exists()){
-            in = new FileInputStream(file);
-        }else {
-            in = SecurityConfig.class.getClassLoader().getResourceAsStream("config/whitelist.txt");
-        }
-
-        InputStreamReader reader = new InputStreamReader(in);
-        BufferedReader bufferedReader = new BufferedReader(reader);
-        for(String str = bufferedReader.readLine();
-                str != null;
-                str = bufferedReader.readLine()){
-            set.add(str);
-        }
-
-        whiteList = set;
-
-        in.close();
-    }
-
-    public static Set<String> getWhiteList(){
+	
+	private static Set<String> whiteList;
+	
+	private static Set<String> allowUrl;
+	
+	static final String[] LISTS={"whiteList","allowUrl"};
+	
+	public static void init() throws IOException {
+		setType();
+		
+	}
+	
+	public static void setType() throws IOException{
+		Set<String> set = new HashSet<>();
+		
+		for(String list:LISTS){
+		InputStream in;
+		File file =new File("./config/"+list+".txt");
+		if(file.exists()){
+			in=new FileInputStream(file);
+		}else{
+			in=SecurityConfig.class.getClassLoader().getResourceAsStream("config/"+list+".txt");
+		}	
+		InputStreamReader reader=new InputStreamReader(in);
+		BufferedReader bufferedreader=new BufferedReader(reader);
+		
+		String str=null;
+		while((str=bufferedreader.readLine())!=null){
+			set.add(str);
+		}
+		if(list.equals("whiteList")){
+			whiteList=set;	
+		}else{
+			allowUrl=set;
+		}
+		}
+	}
+	
+	
+	public static Set<String> getWhiteList(){
         return whiteList;
     }
-
+	
+	public static Set<String> getAllowUrl(){
+		return allowUrl;
+	}
 }

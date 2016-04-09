@@ -16,7 +16,7 @@ public class MD5 {
      * @throws NoSuchAlgorithmException
      * @throws UnsupportedEncodingException
      */
-    public static String EncoderByMd5(String str) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+    public static String encoderByMd5(String str) throws NoSuchAlgorithmException, UnsupportedEncodingException{
         //确定计算方法
         MessageDigest md5 = MessageDigest.getInstance("MD5");
        

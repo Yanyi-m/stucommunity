@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -41,7 +42,7 @@ public class LoginDao {
 	 * @throws NoSuchAlgorithmException 
 	 */
 	public int saveUser(User user) throws NoSuchAlgorithmException, UnsupportedEncodingException{
-		  	String password = MD5.EncoderByMd5(user.getPassword());
+		  	String password = MD5.encoderByMd5(user.getPassword());
 
 	        user.setPassword(password + user.getUsername());
 		
@@ -74,12 +75,33 @@ public class LoginDao {
 		return true;
     }
 	
+	
+	/**
+	 * 根据userId获取用户信息
+	 * @param username
+	 * @return
+	 */
+	public UserInformation getUserInformationByUserId(Integer userId){
+		String sql="select * from user_information where user_id=?"; 
+		
+		List<UserInformation> list=jdbcTemplate.query(sql,new UserInformationMapper(),userId);
+		UserInformation userInformation;
+		if(list.size()==0){
+			userInformation=new UserInformation();
+			return userInformation;
+		}
+		userInformation=list.get(0);
+		
+		return userInformation;
+	}
+	
+	
 	/**
 	 * 查找用户是否存在
 	 * @param email
 	 * @return
 	 */
-	public User findUser(String username){
+	public User getUser(String username){
 		
 		String sql="select * from user where username=?";
 		
@@ -92,6 +114,26 @@ public class LoginDao {
 		return user;
 	}
 	
+	/**
+	 * 得到用户信息通过昵称
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public List<UserInformation> getUserInformationByName(String name){
+		String sql="select * from user_information where nickname like ?";
+		
+		String keyword="%"+name+"%";
+		
+		List<UserInformation> list=jdbcTemplate.query(sql,new UserInformationMapper(),keyword);
+		
+		if(list.size()==0){
+			list=new ArrayList<UserInformation>();
+			return list;
+		}
+		
+		return list;
+	}
 	
 	private class UserMapper implements RowMapper<User>{
 
@@ -104,6 +146,29 @@ public class LoginDao {
             user.setBlackUser(rs.getInt("blackuser"));
             user.setAuthority(rs.getInt("authority"));
 			return  user;
+		}
+		
+	}
+	
+	private class UserInformationMapper implements RowMapper<UserInformation>{
+
+		@Override
+		public UserInformation mapRow(ResultSet rs, int rowNum) throws SQLException{
+			UserInformation userInformation=new UserInformation();
+			userInformation.setUserId(rs.getInt("user_id"));
+			userInformation.setNickName(rs.getString("nickname"));
+			userInformation.setUserIntroduction(rs.getString("user_introduction"));
+			userInformation.setUserPicture(rs.getString("user_picture"));
+			userInformation.setCollege(rs.getString("college"));
+			userInformation.setIdentity(rs.getInt("identity"));
+			userInformation.setStuId(rs.getInt("stu_Id"));
+			userInformation.setUniversity(rs.getString("university"));
+			userInformation.setSpecialty(rs.getString("specialty"));
+			userInformation.setEmail(rs.getString("email"));
+			userInformation.setMobile(rs.getInt("mobile"));
+			userInformation.setJionDate(rs.getDate("jiondate"));
+		
+			return userInformation;
 		}
 		
 	}

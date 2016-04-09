@@ -37,7 +37,7 @@ public class DbConfig {
 
             in = new FileInputStream(file);
         }else {
-            in = SecurityConfig.class.getClassLoader().getResourceAsStream("config/db.properties");
+            in = DbConfig.class.getClassLoader().getResourceAsStream("config/db.properties");
         }
 
         Properties properties = new Properties();
